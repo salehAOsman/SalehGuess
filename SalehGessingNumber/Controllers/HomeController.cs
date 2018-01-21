@@ -43,6 +43,7 @@ namespace SalehGessingNumber.Controllers
                     ViewBag.msg = "Won";
                     TempData["newGame"] = ViewBag.msg;
                 }
+                //to order the "Id" by auto-  1 ---> end by session
                 modNum.Id = (int)Session["id"];
                 modNum.Id++;
                 Session["id"] = modNum.Id;
