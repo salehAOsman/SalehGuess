@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SalehGessingNumber.Models.ModelNumber>
+@using SalehGessingNumber.Models
+@*@model SalehGessingNumber.Models.ModelNumber*@
+@{
+
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+<br />
+<h3>@ViewBag.msg </h3>
+<h2>CheckNum</h2>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <a>number</a>@Html.TextBox("guess", "", new { @placeholder = "Enter number", @class = "form-control" })<br />
+    </div>
+    <div class="form-group">
+       
+        <input type="submit" value="Send" /><br />
+    </div>
+}
+
+@if (ViewBag.rand!=null && ViewBag.msg == "Won")
+{
+    
+<h3>@Session["rand"]</h3>
+
+<h3>@Session["rand"] = null; </h3>                                                                  //reset session["rand"] for new game
+}
+
+
+
+@*@if (Session["listGuess"]!=null)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GuessNum)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+
+            foreach (var item in (List <ModelNumber> listGuess)Session["listGuess"])
+        {
+             <tr>
+                 <td>
+                     @Html.DisplayFor(x => x.Id)
+                 </td>
+                 <td>
+                     @Html.DisplayFor(x => x.Description)
+                 </td>
+                 <td>
+                     @Html.DisplayFor(x => listGuess.Id)
+                 </td>
+             </tr>
+        }
+
+    </table>
+    }*@
