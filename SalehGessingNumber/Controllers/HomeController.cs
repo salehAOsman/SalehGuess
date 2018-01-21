@@ -12,18 +12,22 @@ namespace SalehGessingNumber.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            if (ViewBag.msg == "Won")
+            {
+
+            }
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(int guess)
         {
-            
             int randNum=guess;
             if (Session["rand"] !=null && (string)TempData["newGame"]!="Won")//not finish
             {
+                 
                 ModelNumber modNum = new ModelNumber(guess); //Id++
-
+                 /*repiting section*/
                 randNum = (int)Session["rand"];
 
                 if (guess > randNum)
@@ -39,12 +43,14 @@ namespace SalehGessingNumber.Controllers
                     ViewBag.msg = "Won";
                     TempData["newGame"] = ViewBag.msg;
                 }
-
-                modNum.Description = ViewBag.msg;                                                                    //add three properties with Id by constractor                                                                 
+                modNum.Id = (int)Session["id"];
+                modNum.Id++;
+                Session["id"] = modNum.Id;
                 modNum.GuessNum = guess;
-
+                modNum.Description = ViewBag.msg;                                                                    //add three properties with Id by constractor                                                                 
+               
                 List<ModelNumber> listModel = new List<ModelNumber>();                                                   //new list to use it as stor for session["listGuessNum"] 
-
+                /*end repiting section*/
                 listModel = (List<ModelNumber>)Session["listGuess"];                                                     //store session in new list
                 listModel.Add(modNum);                                                                                      //we add new object ot list 
                 Session["listGuess"] = listModel;                                                                        //we add again list ot session["listGuessNum"] as stackable
@@ -56,6 +62,7 @@ namespace SalehGessingNumber.Controllers
                 ModelNumber modNum = new ModelNumber(guess); //Id++
 
                 Session["rand"] = rand.Next(1,101);
+               
                 /*repiting section*/
                 randNum = (int)Session["rand"];
 
@@ -72,14 +79,15 @@ namespace SalehGessingNumber.Controllers
                         ViewBag.msg = "Won";
                         TempData["newGame"] = ViewBag.msg;
                     }
-
-                modNum.Description = ViewBag.msg;                                                                    //add three properties with Id by constractor                                                                 
+                Session["id"] = 1;
+                modNum.Id = (int)Session["id"];
                 modNum.GuessNum = guess;                                                                             //add object to list                                                                         
-
+                modNum.Description = ViewBag.msg;                                                                    //add three properties with Id by constractor                                                                 
                 List<ModelNumber> listModel = new List<ModelNumber>();                                                   //new list
+                
+                /*end repiting section*/
                 listModel.Add(modNum);                                                                                   // add object to list
                 Session["listGuess"] = listModel;             //???? how can I display this session as a result report   // save listModel in session["listGuess"] 
-                /*end repiting section*/
             }
             return View();
         }

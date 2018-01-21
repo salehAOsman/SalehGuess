@@ -2,65 +2,71 @@
 @using SalehGessingNumber.Models
 @*@model SalehGessingNumber.Models.ModelNumber*@
 @{
-
     ViewBag.Title = "Index";
 }
 <h2>Index</h2>
 <br />
-<h3>@ViewBag.msg </h3>
+@if (ViewBag.msg != "Won")
+{
+    <h3>@ViewBag.msg </h3>
+}
 <h2>CheckNum</h2>
 
+@if (ViewBag.msg == "Won")
+{
+    <h3><a>Congratilations!! The Random number is : </a> @Session["rand"] with @Session["id"] time(s)</h3>
+}
+
+@if (ViewBag.rand != null && ViewBag.msg == "Won")
+{
+    <h3>@Session["rand"] = null; </h3> //reset session["rand"] for new game
+}
+<br />
 @using (Html.BeginForm("Index", "Home", FormMethod.Post))
 {
+    @*we need to put every input inside one div like this *@
     <div class="form-group">
-        <a>number</a>@Html.TextBox("guess", "", new { @placeholder = "Enter number", @class = "form-control" })<br />
+        <a>number</a>@Html.TextBox("guess", "", new { @placeholder = "Enter number", @class = "form-control", autocomplete = "off" })<br />
     </div>
+
     <div class="form-group">
-       
         <input type="submit" value="Send" /><br />
     </div>
 }
 
-@if (ViewBag.rand!=null && ViewBag.msg == "Won")
+
+@*Display Session["listGuess"] *@
+
+@if (Session["listGuess"] != null)
 {
-    
-<h3>@Session["rand"]</h3>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GuessNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
 
-<h3>@Session["rand"] = null; </h3>                                                                  //reset session["rand"] for new game
-}
-
-
-
-@*@if (Session["listGuess"]!=null)
-    {
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.GuessNum)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th></th>
-            </tr>
-
-            foreach (var item in (List <ModelNumber> listGuess)Session["listGuess"])
+        @foreach (var item in (List<ModelNumber>)Session["listGuess"])
         {
-             <tr>
-                 <td>
-                     @Html.DisplayFor(x => x.Id)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(x => x.Description)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(x => listGuess.Id)
-                 </td>
-             </tr>
+            <tr>
+                <td>
+                    @*this special way to display session it is not like this " @Html.DisplayFor(modelItem => item.GuessNum) "  *@
+                    @item.Id
+                </td>
+                <td>
+                    @item.GuessNum
+                </td>
+                <td>
+                    @item.Description
+                </td>
+            </tr>
         }
-
     </table>
-    }*@
+}

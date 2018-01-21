@@ -8,7 +8,6 @@ namespace SalehGessingNumber.Models
 {
     public class ModelNumber
     {
-
         [Display(Name ="Ordering")]
         public int Id { get; set; }
 
@@ -20,11 +19,11 @@ namespace SalehGessingNumber.Models
 
         public ModelNumber()
         {
-
         }
         
         public ModelNumber(int guessNum)
         {
+
             Id++;
             GuessNum = guessNum;
         }
